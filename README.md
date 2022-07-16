@@ -1,7 +1,7 @@
 # One-Click-Mover
 A GUI app made from Python and Qt that moves all the files in just a click.
 
-To build from source download and open main.py and ``` pip install PyQt5 ``` and then ``` pip install PyQt5Designer ```
+To build from source download and open main.py and ``` pip install PyQt5 ``` and to open the .ui file ``` pip install PyQt5Designer ``` then type designer on command-line, go to the directory which has downloaded .ui file and then open the file.
 
 The folders can be renamed or their source can be changed also their text will be retained from last use.
 
