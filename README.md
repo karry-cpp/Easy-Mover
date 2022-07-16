@@ -3,7 +3,9 @@ A GUI app made from Python and Qt that moves all the files in just a click.
 
 To build from source download and open main.py and ``` pip install PyQt5 ``` and then ``` pip install PyQt5Designer ```
 
-The folders can be renamed or their source can be changed.
+The folders can be renamed or their source can be changed also their text will be retained from last use.
+
+Uploaded design.ui as well which is the form design of the app.
  
 Drive link to the executable : https://drive.google.com/file/d/1iFX4mZhXjcqNbeb-y4S2AXzIFKdY6-Ey/view?usp=sharing
  
