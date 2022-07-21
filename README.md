@@ -7,7 +7,6 @@ The folders can be renamed or their source can be changed also their text will b
 
 Uploaded design.ui as well which is the form design of the app.
  
-Drive link to the executable : https://drive.google.com/file/d/1iFX4mZhXjcqNbeb-y4S2AXzIFKdY6-Ey/view?usp=sharing
  
  ![desc](https://user-images.githubusercontent.com/56465574/179203472-96baca3a-fdbc-482d-8104-e5ed286a5107.png)
 
