@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
             break
         ind += 1
 
-    file_loc = srcp + '\\log.txt'
+    file_loc = srcp[:-10] + '\\AppData\\Roaming\\move_log.txt'
 
     if os.path.exists(file_loc):
             with open(file_loc, 'r') as file:
