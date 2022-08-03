@@ -12,24 +12,15 @@ import os
 
 
 class Ui_MainWindow(object):
-    curr_path = os.getcwd()
-    srcp = ''
+
+    srcp = f'C:\\Users\\{os.getlogin()}\\Downloads\\'
     count, ind = 0, 0
     sep = '==============================='
     all_files = ''
     pics, vids, mp3, docs = '','','',''
-    psrc, vsrc, msrc, dsrc = 'D:\\pyPhotos','D:\\pyVideos','D:\\pyMusic','D:\\pyDocuments'    
+    psrc, vsrc, msrc, dsrc = 'D:\\pyPhotos','D:\\pyVideos','D:\\pyMusic','D:\\pyDocuments'
 
-    for i in curr_path:
-        if i == '\\':
-            count += 1
-            pass
-        if count == 3:
-            srcp = curr_path[0:ind] + '\\Downloads'
-            break
-        ind += 1
-
-    file_loc = srcp[:-10] + '\\AppData\\Roaming\\move_log.txt'
+    file_loc = f'C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\log.txt'
 
     if os.path.exists(file_loc):
             with open(file_loc, 'r') as file:
@@ -54,23 +45,25 @@ class Ui_MainWindow(object):
     for file in os.listdir(srcp):
         if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg'):
             pics += file + '\n\n'                    
+            #shutil.move(file, pic_src)
 
         if file.endswith('.mp4') or file.endswith('.mkv'):
-           vids += file + '\n\n'    
+           vids += file + '\n\n'            
+           #shutil.move(file, pic_src)
 
         if file.endswith('.mp3') or file.endswith('.wav') or file.endswith('.m4a'):
-            mp3 += file + '\n\n'          
+            mp3 += file + '\n\n'                    
+            #shutil.move(file, pic_src)   
                      
         if file.endswith('.pdf') or file.endswith('.docx') or file.endswith('.pptx') or file.endswith('.doc') or file.endswith('.ppt'):
             docs += file + '\n\n'
-    
+            #shutil.move(file, pic_src)
     
     all_files += '\n\tPhotos\n\n' + pics + sep + '\n'        
     all_files += '\n\tVideos\n\n' + vids + sep + '\n'        
     all_files += '\n\tMusic\n\n' + mp3 + sep + '\n'        
     all_files += '\n\tDocuments\n\n' + docs + sep + '\n'
     
-    del curr_path, count, ind
 
     def source_changed(self):
         self.all_files = ''
@@ -103,22 +96,21 @@ class Ui_MainWindow(object):
             for file in os.listdir(txt):
                 if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg'):
                     self.pics += file + '\n\n'                    
-                   
+                    #shutil.move(file, pic_src)
 
                 if file.endswith('.mp4') or file.endswith('.mkv'):
                     self.vids += file + '\n\n'            
-                    
+                    #shutil.move(file, pic_src)
 
                 if file.endswith('.mp3') or file.endswith('.wav') or file.endswith('.m4a'):
                     self.mp3 += file + '\n\n'                    
-                    
+                    #shutil.move(file, pic_src)   
                             
                 if file.endswith('.pdf') or file.endswith('.docx') or file.endswith('.pptx') or file.endswith('.doc'):
                     self.docs += file + '\n\n'
-                    
+                    #shutil.move(file, pic_src)
         except:
             pass
-        
         self.all_files += '\n\tPhotos\n\n' + self.pics + self.sep + '\n'        
         self.all_files += '\n\tVideos\n\n' + self.vids + self.sep + '\n'        
         self.all_files += '\n\tMusic\n\n' + self.mp3 + self.sep + '\n'        
@@ -148,22 +140,22 @@ class Ui_MainWindow(object):
             if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg'):                
                 comm = 'move "' + src + '\\' + file + '" ' + '"' + pic_src + '"'
                 os.system(comm)
-                
+                #shutil.move(file, pic_src)
 
             if file.endswith('.mp4') or file.endswith('.mkv'):
                 comm = 'move "' + src + '\\' + file + '" ' + '"' + vid_src + '"'
                 os.system(comm)
-                
+                #shutil.move(file, vid_src)
 
             if file.endswith('.mp3') or file.endswith('.wav') or file.endswith('.m4a'):
                 comm = 'move "' + src + '\\' + file + '" ' + '"' + mp3_src + '"'
                 os.system(comm)
-               
+                #shutil.move(file, mp3_src)
 
             if file.endswith('.pdf') or file.endswith('.docx') or file.endswith('.pptx') or file.endswith('.doc'):
                 comm = 'move "' + src + '\\' + file + '" ' + '"' + doc_src + '"'
                 os.system(comm)
-                
+                #shutil.move(file, doc_src)
 
         self.textEdit.setPlainText('\n\n\n\t  Moved\n\n\n' + self.sep + '\n\n'+ self.all_files + self.sep + '\n\n')
         pass
