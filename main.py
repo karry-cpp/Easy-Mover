@@ -9,20 +9,24 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
+import shutil
+import time
 
 
 class Ui_MainWindow(object):
 
-    srcp = f'C:\\Users\\{os.getlogin()}\\Downloads\\'
+    srcp = f'C:\\Users\\{os.getlogin()}\\Downloads\\'           #locate default downloads folder
     count, ind = 0, 0
     sep = '==============================='
     all_files = ''
     pics, vids, mp3, docs = '','','',''
-    psrc, vsrc, msrc, dsrc = 'D:\\pyPhotos','D:\\pyVideos','D:\\pyMusic','D:\\pyDocuments'
+    psrc, vsrc, msrc, dsrc = 'D:\\pyPhotos','D:\\pyVideos','D:\\pyMusic','D:\\pyDocuments'      #default destination folder
 
-    file_loc = f'C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\log.txt'
-
-    if os.path.exists(file_loc):
+    file_loc = f'C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\log.txt'         #any changes in destination folders 
+                                                                                #will be saved here
+    
+    
+    if os.path.exists(file_loc):                                #check if the file exists and get the changed sources
             with open(file_loc, 'r') as file:
                 lines = file.readlines()
                 psrc = lines[0][0:-1]
@@ -32,7 +36,7 @@ class Ui_MainWindow(object):
                 srcp = lines[4]
                 pass
     else:
-        with open(file_loc, 'w') as file:                
+        with open(file_loc, 'w') as file:                #if doesnt exist writee the default locations
             file.write(psrc + '\n')
             file.write(vsrc + '\n')
             file.write(msrc + '\n')
@@ -40,32 +44,33 @@ class Ui_MainWindow(object):
             file.write(srcp)
             pass
 
-    srcp = srcp.strip()
-        
-    for file in os.listdir(srcp):
-        if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg'):
-            pics += file + '\n\n'                    
-            #shutil.move(file, pic_src)
+    srcp = srcp.strip()         #strip if any newline in the source
 
-        if file.endswith('.mp4') or file.endswith('.mkv'):
-           vids += file + '\n\n'            
-           #shutil.move(file, pic_src)
+    try:
+        for file in os.listdir(srcp):
+            if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg'):
+                pics += file + '\n\n'                    
 
-        if file.endswith('.mp3') or file.endswith('.wav') or file.endswith('.m4a'):
-            mp3 += file + '\n\n'                    
-            #shutil.move(file, pic_src)   
-                     
-        if file.endswith('.pdf') or file.endswith('.docx') or file.endswith('.pptx') or file.endswith('.doc') or file.endswith('.ppt'):
-            docs += file + '\n\n'
-            #shutil.move(file, pic_src)
+            if file.endswith('.mp4') or file.endswith('.mkv'):
+                vids += file + '\n\n'            
+
+            if file.endswith('.mp3') or file.endswith('.wav') or file.endswith('.m4a'):
+                mp3 += file + '\n\n'                    
+                        
+            if file.endswith('.pdf') or file.endswith('.docx') or file.endswith('.pptx') or file.endswith('.doc') or file.endswith('.ppt'):
+                docs += file + '\n\n'
+    except:
+        all_files += "Files do not exists or the source folder does not exist\n"
+        pass
+
     
-    all_files += '\n\tPhotos\n\n' + pics + sep + '\n'        
-    all_files += '\n\tVideos\n\n' + vids + sep + '\n'        
-    all_files += '\n\tMusic\n\n' + mp3 + sep + '\n'        
-    all_files += '\n\tDocuments\n\n' + docs + sep + '\n'
+    all_files += '\n\t  Photos\n\n' + pics + sep + '\n'        
+    all_files += '\n\t  Videos\n\n' + vids + sep + '\n'        
+    all_files += '\n\t   Music\n\n' + mp3 + sep + '\n'        
+    all_files += '\n\t Documents\n\n' + docs + sep + '\n'
     
 
-    def source_changed(self):
+    def source_changed(self):           #check if source folder is changed 
         self.all_files = ''
         lines = [self.psrc + '\n', self.vsrc + '\n', self.msrc + '\n', self.dsrc + '\n', self.srcp]
         self.docs, self.mp3, self.pics, self.vids = '','','',''
@@ -96,21 +101,23 @@ class Ui_MainWindow(object):
             for file in os.listdir(txt):
                 if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg'):
                     self.pics += file + '\n\n'                    
-                    #shutil.move(file, pic_src)
+                    
 
                 if file.endswith('.mp4') or file.endswith('.mkv'):
                     self.vids += file + '\n\n'            
-                    #shutil.move(file, pic_src)
+                    
 
                 if file.endswith('.mp3') or file.endswith('.wav') or file.endswith('.m4a'):
                     self.mp3 += file + '\n\n'                    
-                    #shutil.move(file, pic_src)   
+                    
                             
                 if file.endswith('.pdf') or file.endswith('.docx') or file.endswith('.pptx') or file.endswith('.doc'):
                     self.docs += file + '\n\n'
-                    #shutil.move(file, pic_src)
+                    
         except:
             pass
+
+
         self.all_files += '\n\tPhotos\n\n' + self.pics + self.sep + '\n'        
         self.all_files += '\n\tVideos\n\n' + self.vids + self.sep + '\n'        
         self.all_files += '\n\tMusic\n\n' + self.mp3 + self.sep + '\n'        
@@ -126,6 +133,7 @@ class Ui_MainWindow(object):
         mp3_src = self.textEdit_5.toPlainText()
         doc_src = self.textEdit_6.toPlainText()
         src = self.textEdit_2.toPlainText()
+
         if os.path.exists(pic_src) == False:
             os.mkdir(pic_src)
         if os.path.exists(vid_src) == False:
@@ -138,25 +146,18 @@ class Ui_MainWindow(object):
         
         for file in os.listdir(src):
             if file.endswith('.jpg') or file.endswith('.png') or file.endswith('.jpeg'):                
-                comm = 'move "' + src + '\\' + file + '" ' + '"' + pic_src + '"'
-                os.system(comm)
-                #shutil.move(file, pic_src)
+                shutil.move(src + "\\" + file, pic_src)
 
             if file.endswith('.mp4') or file.endswith('.mkv'):
-                comm = 'move "' + src + '\\' + file + '" ' + '"' + vid_src + '"'
-                os.system(comm)
-                #shutil.move(file, vid_src)
+                shutil.move(src + "\\" + file, vid_src)
 
             if file.endswith('.mp3') or file.endswith('.wav') or file.endswith('.m4a'):
-                comm = 'move "' + src + '\\' + file + '" ' + '"' + mp3_src + '"'
-                os.system(comm)
-                #shutil.move(file, mp3_src)
+                shutil.move(src + "\\" + file, mp3_src)
 
             if file.endswith('.pdf') or file.endswith('.docx') or file.endswith('.pptx') or file.endswith('.doc'):
-                comm = 'move "' + src + '\\' + file + '" ' + '"' + doc_src + '"'
-                os.system(comm)
-                #shutil.move(file, doc_src)
+                shutil.move(src + "\\" + file, doc_src)
 
+        time.sleep(3)
         self.textEdit.setPlainText('\n\n\n\t  Moved\n\n\n' + self.sep + '\n\n'+ self.all_files + self.sep + '\n\n')
         pass
     
@@ -257,7 +258,7 @@ class Ui_MainWindow(object):
         pass
 
 
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow):          #driver ui code
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
