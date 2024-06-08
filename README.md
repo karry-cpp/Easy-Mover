@@ -1,4 +1,4 @@
-# One-Click-Mover
+# Easy-Mover
 A GUI app made from Python and Qt that moves all the files in just a click.
 
 To build the app from source download and open ``main.py`` and then type ``` pip install PyQt5 ``` on cmd/terminal.
